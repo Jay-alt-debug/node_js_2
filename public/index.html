@@ -1,15 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Node File Server</title>
+  <meta charset="UTF-8">
+  <title>File Server</title>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>Node.js File Server</h1>
-<p>Static files are being served successfully.</p>
+<div class="wrapper">
 
-<script src="script.js"></script>
+  <div class="card">
+
+    <h1>File Server</h1>
+    <p class="subtitle">Upload and manage files using Node.js.</p>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+
+      <label class="file-input">
+        <input type="file" name="fileupload" required>
+        <span>Select File</span>
+      </label>
+
+      <button type="submit">Upload</button>
+
+    </form>
+
+  </div>
+
+</div>
 
 </body>
 </html>

@@ -1,33 +1,23 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
-const mime = require('mime-types');
+const formidable = require('formidable');
 
-const server = http.createServer((req, res) => {
+if (req.url === '/upload' && req.method.toLowerCase() === 'post') {
 
-  let filePath = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url);
+  const form = new formidable.IncomingForm();
+  form.uploadDir = path.join(__dirname, 'uploads');
+  form.keepExtensions = true;
 
-  fs.readFile(filePath, (err, content) => {
+  form.parse(req, (err, fields, files) => {
 
     if (err) {
-      if (err.code === 'ENOENT') {
-        res.writeHead(404, { 'Content-Type': 'text/html' });
-        res.end('<h1>404 - File Not Found</h1>', 'utf8');
-      } else {
-        res.writeHead(500);
-        res.end(`Server Error: ${err.code}`);
-      }
-    } else {
-      res.writeHead(200, { 'Content-Type': mime.lookup(filePath) });
-      res.end(content, 'utf8');
+      res.writeHead(500);
+      res.end("Upload Error");
+      return;
     }
+
+    res.writeHead(200);
+    res.end("File uploaded successfully");
 
   });
 
-});
-
-const PORT = process.env.PORT || 3000;
-
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  return;
+}
